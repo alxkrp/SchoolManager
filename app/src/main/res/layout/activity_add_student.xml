@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="40dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".AddStudentActivity">
+
+    <EditText
+        android:id="@+id/edFio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="ФИО"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spResp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:entries="@array/responsible_list"
+            android:hint="Ответственный 1" />
+
+        <EditText
+            android:id="@+id/edRespFio1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="ФИО"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edRespPhone1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="Телефон"
+        android:inputType="phone"
+        android:text="+7" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spResp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:entries="@array/responsible_list"
+            android:hint="Ответственный 1" />
+
+        <EditText
+            android:id="@+id/edRespFio2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="ФИО"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edRespPhone2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="Телефон"
+        android:inputType="phone"
+        android:text="+7" />
+
+    <Button
+        android:id="@+id/btnAddOrUpdateStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Сохранить" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
