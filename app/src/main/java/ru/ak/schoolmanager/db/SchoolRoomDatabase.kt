@@ -1,6 +1,7 @@
 package ru.ak.schoolmanager.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -26,7 +27,13 @@ import ru.ak.schoolmanager.model.Student
  * The fact that this has very few comments emphasizes its coolness.  In a real
  * app, consider exporting the schema to help you with migrations.
  */
-@Database(entities = [Student::class], version = 1, exportSchema = false)
+@Database(
+    entities = [Student::class],
+    version = 1,
+    autoMigrations = [
+//       AutoMigration (from = 1, to = 2),
+    ],
+    exportSchema = true)
 abstract class SchoolRoomDatabase : RoomDatabase() {
     abstract fun studentDao(): StudentDao
 

@@ -28,6 +28,8 @@ data class Student(
     @ColumnInfo(name = "respPhone2")
     var respPhone2: String,
 
+    @ColumnInfo(name = "note")
+    var note: String,
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

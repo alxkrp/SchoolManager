@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 val content = myFile.bufferedReader().readText()
                 // демонстрируем имя файла и объем прочитанных данных
                 Toast
-                    .makeText(this, "File %s, Length %d bytes".format(intent?.data!!.path, content.length), Toast.LENGTH_LONG)
+                    .makeText(this, "File %s, Length %d bytes".format(intent.data!!.path, content.length), Toast.LENGTH_LONG)
                     .show()
                 loadJson(content)
             }
@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                     studentJson.optInt("resp2"),
                     studentJson.optString("respFio2"),
                     studentJson.optString("respPhone2"),
+                    studentJson.optString("note"),
                 )
                 CoroutineScope(Dispatchers.IO).launch {
                     SchoolRoomDatabase(this@MainActivity).studentDao().addStudent(student)

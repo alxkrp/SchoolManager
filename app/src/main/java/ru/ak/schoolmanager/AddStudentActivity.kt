@@ -36,6 +36,7 @@ class AddStudentActivity : AppCompatActivity() {
             binding.spResp2.setSelection(student?.resp2!!)
             binding.edRespFio2.setText(student?.respFio2)
             binding.edRespPhone2.setText(student?.respPhone2)
+            binding.edNote.setText(student?.note)
         }
 
         binding.btnAddOrUpdateStudent.setOnClickListener { addOrUpdateStudent() }
@@ -49,13 +50,13 @@ class AddStudentActivity : AppCompatActivity() {
         val resp2 = binding.spResp2.selectedItemPosition
         val respFio2 = binding.edRespFio2.text.toString()
         val respPhone2 = binding.edRespPhone2.text.toString()
+        val note = binding.edNote.text.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
+            val s = Student(fio, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2, note)
             if (student == null) {
-                val s = Student(fio, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2)
                 SchoolRoomDatabase(this@AddStudentActivity).studentDao().addStudent(s)
             } else {
-                val s = Student(fio, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2)
                 s.id = student?.id ?: 0
                 SchoolRoomDatabase(this@AddStudentActivity).studentDao().updateStudent(s)
             }

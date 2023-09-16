@@ -27,6 +27,7 @@ class StudentInfoActivity : AppCompatActivity() {
         binding.tvResp2.text = reponsibles.get(student?.resp2!!)
         binding.tvRespFio2.text = student?.respFio2
         binding.tvRespPhone2.text = student?.respPhone2
+        binding.tvNote.text = student?.note
 
         binding.tvRespPhone1.setOnClickListener {
             phoneCall((it as TextView).text.toString())
