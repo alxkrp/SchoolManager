@@ -11,7 +11,7 @@ data class Student(
     var fio: String,
 
     @ColumnInfo(name = "resp1")
-    var resp1: String,
+    var resp1: Int,
 
     @ColumnInfo(name = "respFio1")
     var respFio1: String,
@@ -20,7 +20,7 @@ data class Student(
     var respPhone1: String,
 
     @ColumnInfo(name = "resp2")
-    var resp2: String,
+    var resp2: Int,
 
     @ColumnInfo(name = "respFio2")
     var respFio2: String,

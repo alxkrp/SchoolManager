@@ -19,11 +19,12 @@ class StudentInfoActivity : AppCompatActivity() {
 
         student = intent.getSerializableExtra("Data") as Student
 
+        val reponsibles = resources.getStringArray(R.array.responsible_list)
         binding.tvFio.text = student?.fio
-        binding.tvResp1.text = student?.resp1
+        binding.tvResp1.text = reponsibles.get(student?.resp1!!)
         binding.tvRespFio1.text = student?.respFio1
         binding.tvRespPhone1.text = student?.respPhone1
-        binding.tvResp2.text = student?.resp2
+        binding.tvResp2.text = reponsibles.get(student?.resp2!!)
         binding.tvRespFio2.text = student?.respFio2
         binding.tvRespPhone2.text = student?.respPhone2
 

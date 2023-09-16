@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Звонок"
+            android:text="Импортировать"
             app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
 </RelativeLayout>

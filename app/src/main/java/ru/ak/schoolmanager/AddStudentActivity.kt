@@ -29,10 +29,11 @@ class AddStudentActivity : AppCompatActivity() {
 
         if (student != null) {
             binding.edFio.setText(student?.fio)
-            binding.spResp1.setSelection((binding.spResp1.adapter as ArrayAdapter<String>).getPosition(student?.resp1))
+//            binding.spResp1.setSelection((binding.spResp1.adapter as ArrayAdapter<String>).getPosition(student?.resp1))
+            binding.spResp1.setSelection(student?.resp1!!)
             binding.edRespFio1.setText(student?.respFio1)
             binding.edRespPhone1.setText(student?.respPhone1)
-            binding.spResp2.setSelection((binding.spResp2.adapter as ArrayAdapter<String>).getPosition(student?.resp2))
+            binding.spResp2.setSelection(student?.resp2!!)
             binding.edRespFio2.setText(student?.respFio2)
             binding.edRespPhone2.setText(student?.respPhone2)
         }
@@ -42,10 +43,10 @@ class AddStudentActivity : AppCompatActivity() {
 
     private fun addOrUpdateStudent() {
         val fio = binding.edFio.text.toString()
-        val resp1 = binding.spResp1.selectedItem.toString()
+        val resp1 = binding.spResp1.selectedItemPosition
         val respFio1 = binding.edRespFio1.text.toString()
         val respPhone1 = binding.edRespPhone1.text.toString()
-        val resp2 = binding.spResp2.selectedItem.toString()
+        val resp2 = binding.spResp2.selectedItemPosition
         val respFio2 = binding.edRespFio2.text.toString()
         val respPhone2 = binding.edRespPhone2.text.toString()
 

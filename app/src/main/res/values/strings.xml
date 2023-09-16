@@ -1,13 +1,16 @@
 <resources>
-    <string name="app_name">SchoolManager</string>
+    <string name="app_name">Школа</string>
 
     <string-array name="responsible_list">
+        <item>-</item>
         <item>Мать</item>
         <item>Отец</item>
         <item>Брат</item>
         <item>Сестра</item>
         <item>Бабушка</item>
         <item>Дедушка</item>
+        <item>Мачеха</item>
+        <item>Отчим</item>
         <item>Тётя</item>
         <item>Дядя</item>
     </string-array>
