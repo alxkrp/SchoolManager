@@ -2,9 +2,9 @@ package ru.ak.schoolmanager
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import ru.ak.schoolmanager.databinding.ActivityStudentInfoBinding
 import ru.ak.schoolmanager.model.Student
 
@@ -38,7 +38,7 @@ class StudentInfoActivity : AppCompatActivity() {
     }
 
     private fun phoneCall(phone: String) {
-        val i: Intent = Intent(Intent.ACTION_CALL)
+        val i = Intent(Intent.ACTION_CALL)
         i.setData(Uri.parse("tel:${phone}"))
         startActivity(i)
     }

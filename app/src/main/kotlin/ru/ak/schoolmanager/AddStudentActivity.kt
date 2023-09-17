@@ -2,7 +2,6 @@ package ru.ak.schoolmanager
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

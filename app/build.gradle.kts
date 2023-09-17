@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "ru.ak.schoolmanager"
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "ru.ak.schoolmanager"
         minSdk = 29
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -44,25 +44,28 @@ android {
 }
 
 object Versions {
-    const val roomVersion = "2.4.3"
+    const val roomVersion = "2.5.2"
+    const val coreKtxVersion = "1.10.1"
+    const val lifecycleRuntimeKtxVersion = "2.6.2"
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.5.0")
-    implementation("com.google.android.material:material:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
+//    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+//    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("androidx.room:room-runtime:${Versions.roomVersion}")
     implementation("androidx.room:room-ktx:${Versions.roomVersion}")
     kapt("androidx.room:room-compiler:${Versions.roomVersion}")
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntimeKtxVersion}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
 //    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 //    implementation("androidx.recyclerview:recyclerview:1.3.1")

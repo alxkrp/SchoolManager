@@ -4,12 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.provider.DocumentsContract
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,19 +23,19 @@ import ru.ak.schoolmanager.adapter.StudentAdapter
 import ru.ak.schoolmanager.databinding.ActivityMainBinding
 import ru.ak.schoolmanager.db.SchoolRoomDatabase
 import ru.ak.schoolmanager.model.Student
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel by lazy { MainViewModel(Dependencies.statisticRepository) }
     private var mAdapter: StudentAdapter? = null
 
     val PERMISSION_CODE: Int  = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Dependencies.init(applicationContext)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -166,9 +162,13 @@ class MainActivity : AppCompatActivity() {
                         val builder = AlertDialog.Builder(this@MainActivity)
                         builder.setMessage("Вы уверены, что хотите удалить ученика?")
                         builder.setPositiveButton("Да") { p0, _ ->
+                            viewModel.deleteStudent(it.id)
+//                            val list = viewModel.getStudentsAll()
+//                            setAdapter(list)
+//                            p0.dismiss()
                             CoroutineScope(Dispatchers.IO).launch {
-                                SchoolRoomDatabase(this@MainActivity).studentDao().deleteStudent(it)
-                                val list = SchoolRoomDatabase(this@MainActivity).studentDao().getStudentsAll()
+//                                SchoolRoomDatabase(this@MainActivity).studentDao().deleteStudent(it.id)
+                                val list = Dependencies.appDatabase.studentDao().getStudentsAll()
                                 Handler(Looper.getMainLooper()).post(Runnable {
                                     setAdapter(list)
                                 })
