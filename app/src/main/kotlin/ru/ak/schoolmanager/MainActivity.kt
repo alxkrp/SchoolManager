@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until arr.length()) {
             val studentJson = arr.getJSONObject(i)
             val fio = studentJson.optString("fio")
-            if (!fio.isNullOrEmpty()) {
+            if (!fio.isNullOrBlank()) {
                 val student = Student(
                     studentJson.getString("fio"),
                     studentJson.optInt("resp1"),
@@ -89,9 +89,6 @@ class MainActivity : AppCompatActivity() {
                     studentJson.optString("note"),
                 )
                 viewModel.addStudent(student)
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    SchoolRoomDatabase(this@MainActivity).studentDao().addStudent(student)
-//                }
             }
         }
     }
@@ -106,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                 PERMISSION_CODE
             )
         }
-
 
         val intent = Intent()
             .setType("*/*")
