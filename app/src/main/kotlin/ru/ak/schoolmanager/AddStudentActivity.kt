@@ -7,7 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.ak.schoolmanager.databinding.ActivityAddStudentBinding
-import ru.ak.schoolmanager.db.SchoolRoomDatabase
 import ru.ak.schoolmanager.model.Student
 
 
@@ -54,10 +53,10 @@ class AddStudentActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val s = Student(fio, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2, note)
             if (student == null) {
-                SchoolRoomDatabase(this@AddStudentActivity).studentDao().addStudent(s)
+                Dependencies.appDatabase.getStudentDao().addStudent(s)
             } else {
                 s.id = student?.id ?: 0
-                SchoolRoomDatabase(this@AddStudentActivity).studentDao().updateStudent(s)
+                Dependencies.appDatabase.getStudentDao().updateStudent(s)
             }
             finish()
         }

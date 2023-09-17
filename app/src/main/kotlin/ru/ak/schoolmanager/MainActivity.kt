@@ -5,8 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import ru.ak.schoolmanager.adapter.StudentAdapter
 import ru.ak.schoolmanager.databinding.ActivityMainBinding
-import ru.ak.schoolmanager.db.SchoolRoomDatabase
 import ru.ak.schoolmanager.model.Student
 
 
@@ -90,9 +88,10 @@ class MainActivity : AppCompatActivity() {
                     studentJson.optString("respPhone2"),
                     studentJson.optString("note"),
                 )
-                CoroutineScope(Dispatchers.IO).launch {
-                    SchoolRoomDatabase(this@MainActivity).studentDao().addStudent(student)
-                }
+                viewModel.addStudent(student)
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    SchoolRoomDatabase(this@MainActivity).studentDao().addStudent(student)
+//                }
             }
         }
     }
@@ -113,15 +112,6 @@ class MainActivity : AppCompatActivity() {
             .setType("*/*")
             .setAction(Intent.ACTION_GET_CONTENT)
 
-//        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-//            addCategory(Intent.CATEGORY_OPENABLE)
-//            type = "text/plain"
-//
-//            // Optionally, specify a URI for the file that should appear in the
-//            // system file picker when it loads.
-////            putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
-//        }
-
         // запускаем контракт
         startForResult.launch(intent)
     }
@@ -138,8 +128,8 @@ class MainActivity : AppCompatActivity() {
 
 
         CoroutineScope(Dispatchers.IO).launch {
-            val studentList = SchoolRoomDatabase(this@MainActivity).studentDao().getStudentsAll()
-            Handler(Looper.getMainLooper()).post(Runnable {
+            val studentList = viewModel.getStudentsAll()
+            lifecycleScope.launch {
                 binding.rvStudents.apply {
                     layoutManager = LinearLayoutManager(this@MainActivity)
                     adapter = mAdapter
@@ -163,15 +153,11 @@ class MainActivity : AppCompatActivity() {
                         builder.setMessage("Вы уверены, что хотите удалить ученика?")
                         builder.setPositiveButton("Да") { p0, _ ->
                             viewModel.deleteStudent(it.id)
-//                            val list = viewModel.getStudentsAll()
-//                            setAdapter(list)
-//                            p0.dismiss()
                             CoroutineScope(Dispatchers.IO).launch {
-//                                SchoolRoomDatabase(this@MainActivity).studentDao().deleteStudent(it.id)
-                                val list = Dependencies.appDatabase.studentDao().getStudentsAll()
-                                Handler(Looper.getMainLooper()).post(Runnable {
+                                val list = viewModel.getStudentsAll()
+                                lifecycleScope.launch {
                                     setAdapter(list)
-                                })
+                                }
                             }
                             p0.dismiss()
                         }
@@ -183,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                         dialog.show()
                     }
                 }
-            })
+            }
         }
     }
 

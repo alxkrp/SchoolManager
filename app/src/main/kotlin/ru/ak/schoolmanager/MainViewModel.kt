@@ -2,6 +2,9 @@ package ru.ak.schoolmanager
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import ru.ak.schoolmanager.db.repository.StudentsRepository
 import ru.ak.schoolmanager.model.Student
@@ -19,10 +22,10 @@ class MainViewModel(private val studentsRepository: StudentsRepository): ViewMod
         }
     }
 
-//    fun getStudentsAll(): List<Student> {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            return studentsRepository.getStudentsAll()
-//        }
-//
-//    }
+    suspend fun getStudentsAll(): List<Student> {
+        val students = CoroutineScope(Dispatchers.IO).async {
+            return@async studentsRepository.getStudentsAll()
+        }
+        return students.await()
+    }
 }

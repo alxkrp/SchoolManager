@@ -19,5 +19,5 @@ object Dependencies {
             .build()
     }
 
-    val statisticRepository: StudentsRepository by lazy { StudentsRepository(appDatabase.studentDao()) }
+    val statisticRepository: StudentsRepository by lazy { StudentsRepository(appDatabase.getStudentDao()) }
 }
