@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by lazy { MainViewModel(Dependencies.statisticRepository) }
     private var mAdapter: StudentAdapter? = null
 
-    val PERMISSION_CODE: Int  = 100
+    private val PERMISSION_CODE: Int  = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             // открываем поток на чтение по полученному URI
@@ -121,7 +121,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         mAdapter = StudentAdapter()
-
 
         CoroutineScope(Dispatchers.IO).launch {
             val studentList = viewModel.getStudentsAll()
