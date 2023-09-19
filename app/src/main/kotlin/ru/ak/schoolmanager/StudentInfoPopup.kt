@@ -3,53 +3,67 @@ package ru.ak.schoolmanager
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.text.Html
+import android.text.Html.FROM_HTML_MODE_LEGACY
 import android.view.View
 import android.view.View.GONE
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import android.widget.TextView
 import ru.ak.schoolmanager.databinding.ActivityStudentInfoBinding
 import ru.ak.schoolmanager.model.Student
 
-
-class StudentInfoPopup : PopupWindow {
+class StudentInfoPopup (view: View, activity: Activity, student: Student) : PopupWindow(
+    view,
+    LinearLayout.LayoutParams.WRAP_CONTENT,
+    LinearLayout.LayoutParams.WRAP_CONTENT
+) {
     private var binding: ActivityStudentInfoBinding
 
-    constructor(view: View, activity: Activity, student: Student) :
-            super(view, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT) {
+    init {
         binding = ActivityStudentInfoBinding.inflate(activity.layoutInflater)
-
         isFocusable = true
         isTouchable = true
         isOutsideTouchable = true
+        setBackgroundDrawable(null)
 
-        val reponsibles = view.resources.getStringArray(R.array.responsible_list)
+        val repArray = view.resources.getStringArray(R.array.responsible_list)
         binding.tvFio.text = student.fio
-        binding.tvResp1.text = reponsibles.get(student.resp1)
-        binding.tvRespFio1.text = student.respFio1
-        binding.tvRespPhone1.text = student.respPhone1
-        if (student.resp2 == 0) {
-            binding.llResp2.visibility = GONE
+        if (student.resp1 != 0) {
+            val sp1 = Html.fromHtml(
+                "${repArray[student.resp1]}<br/>${student.respFio1}<br/><big>${student.respPhone1}</big>",
+                FROM_HTML_MODE_LEGACY
+            )
+            binding.tvResp1.text = sp1
         } else {
-            binding.tvResp2.text = reponsibles.get(student.resp2)
-            binding.tvRespFio2.text = student.respFio2
-            binding.tvRespPhone2.text = student.respPhone2
+            binding.tvResp1.visibility = GONE
         }
-        if (student.note.isBlank()) {
-            binding.tvNote.visibility = GONE
+        if (student.resp2 != 0) {
+            val sp2 = Html.fromHtml(
+                "${repArray[student.resp2]}<br/>${student.respFio2}<br/><big>${student.respPhone2}</big>",
+                FROM_HTML_MODE_LEGACY
+            )
+            binding.tvResp2.text = sp2
         } else {
+            binding.tvResp2.visibility = GONE
+        }
+        if (student.note.isNotBlank()) {
             binding.tvNote.text = student.note
+        } else {
+            binding.tvNote.visibility = GONE
+        }
+        if (student.respPhone1.isNotBlank()) {
+            binding.tvResp1.setOnClickListener {
+                phoneCall(student.respPhone1, activity)
+            }
+        }
+        if (student.respPhone2.isNotBlank()) {
+            binding.tvResp2.setOnClickListener {
+                phoneCall(student.respPhone2, activity)
+            }
         }
 
-        binding.tvRespPhone1.setOnClickListener {
-            phoneCall((it as TextView).text.toString(), activity)
-        }
-        binding.tvRespPhone2.setOnClickListener {
-            phoneCall((it as TextView).text.toString(), activity)
-        }
-
-        view.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        height = view.measuredHeight
+        binding.root.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        height = binding.root.measuredHeight
 
         contentView = binding.root
     }
