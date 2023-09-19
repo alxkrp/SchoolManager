@@ -35,7 +35,7 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() 
 
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
-                onClickListener!!.onClick(position, student )
+                onClickListener!!.onClick(holder.itemView, position, student)
             }
         }
     }
@@ -63,7 +63,7 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() 
 
     // onClickListener Interface
     interface OnClickListener {
-        fun onClick(position: Int, model: Student)
+        fun onClick(view: View, position: Int, model: Student)
     }
 
     class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

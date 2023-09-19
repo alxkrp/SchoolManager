@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -132,8 +134,8 @@ class MainActivity : AppCompatActivity() {
 
                     mAdapter?.setOnClickListener(object :
                         StudentAdapter.OnClickListener {
-                            override fun onClick(position: Int, model: Student) {
-                                showStudentInfo(model)
+                            override fun onClick(view: View, position: Int, model: Student) {
+                                showStudentInfo(view, model)
                             }
                         }
                     )
@@ -168,9 +170,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showStudentInfo(model: Student) {
-        val intent = Intent(this@MainActivity, StudentInfoActivity::class.java)
-        intent.putExtra("Data", model)
-        startActivity(intent)
+    private fun showStudentInfo(view: View, model: Student) {
+//        val intent = Intent(this@MainActivity, StudentInfoActivity::class.java)
+//        intent.putExtra("Data", model)
+//        startActivity(intent)
+
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView = inflater.inflate(R.layout.activity_student_info, null, false)
+        StudentInfoPopup(popupView, this, model).show(view)
     }
 }
