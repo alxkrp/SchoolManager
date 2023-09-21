@@ -8,6 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.ak.schoolmanager.databinding.ActivityAddStudentBinding
 import ru.ak.schoolmanager.model.Student
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 
 class AddStudentActivity : AppCompatActivity() {
@@ -27,7 +31,10 @@ class AddStudentActivity : AppCompatActivity() {
 
         if (student != null) {
             binding.edFio.setText(student?.fio)
-//            binding.spResp1.setSelection((binding.spResp1.adapter as ArrayAdapter<String>).getPosition(student?.resp1))
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            if (student?.birthDate != null) {
+                binding.edBirthDate.setText(student?.birthDate!!.format(formatter))
+            }
             binding.spResp1.setSelection(student?.resp1!!)
             binding.edRespFio1.setText(student?.respFio1)
             binding.edRespPhone1.setText(student?.respPhone1)
@@ -42,6 +49,12 @@ class AddStudentActivity : AppCompatActivity() {
 
     private fun addOrUpdateStudent() {
         val fio = binding.edFio.text.toString()
+        var birthDate: LocalDate? = null
+        val birthDateStr = binding.edBirthDate.text.toString()
+        if (birthDateStr.isNotBlank()) {
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            birthDate = LocalDate.parse(birthDateStr, formatter)
+        }
         val resp1 = binding.spResp1.selectedItemPosition
         val respFio1 = binding.edRespFio1.text.toString()
         val respPhone1 = binding.edRespPhone1.text.toString()
@@ -51,16 +64,31 @@ class AddStudentActivity : AppCompatActivity() {
         val note = binding.edNote.text.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val s = Student(fio, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2, note)
+            val s = Student(fio, birthDate, resp1, respFio1, respPhone1, resp2, respFio2, respPhone2, note)
             if (student == null) {
                 Dependencies.appDatabase.getStudentDao().addStudent(s)
+                if (s.birthDate != null) {
+                    addAlarm(s)
+                }
             } else {
                 s.id = student?.id ?: 0
                 Dependencies.appDatabase.getStudentDao().updateStudent(s)
+                if (s.birthDate != null && !s.birthDate!!.equals(student!!.birthDate)) {
+                    addAlarm(s)
+                }
             }
             finish()
         }
     }
 
-
+    private fun addAlarm(student: Student) {
+//        val alarm = AlarmBroadcast()
+////        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+//        val alarmTime = LocalDateTime.of(student.birthDate?.withYear(LocalDate.now().year),
+//                LocalTime.now().plusMinutes(1))
+////        val alarmTimeStr = alarmTime.withYear(2023).format(formatter)
+////        val alarmTime = LocalDateTime.now().plusMinutes(1).format(formatter)
+//        alarm.setAlarm(applicationContext, alarmTime)
+////        alarm.alert(applicationContext)
+    }
 }

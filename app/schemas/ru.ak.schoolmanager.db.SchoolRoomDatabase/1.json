@@ -2,17 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "260002466fdd096653362b7c810c9315",
+    "identityHash": "b90813b210d3202cdd55c32cbd774776",
     "entities": [
       {
         "tableName": "students",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fio` TEXT NOT NULL, `resp1` INTEGER NOT NULL, `respFio1` TEXT NOT NULL, `respPhone1` TEXT NOT NULL, `resp2` INTEGER NOT NULL, `respFio2` TEXT NOT NULL, `respPhone2` TEXT NOT NULL, `note` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fio` TEXT NOT NULL, `birthDate` INTEGER, `resp1` INTEGER NOT NULL, `respFio1` TEXT NOT NULL, `respPhone1` TEXT NOT NULL, `resp2` INTEGER NOT NULL, `respFio2` TEXT NOT NULL, `respPhone2` TEXT NOT NULL, `note` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "fio",
             "columnName": "fio",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "resp1",
@@ -64,10 +70,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": true,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": true
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -76,7 +82,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '260002466fdd096653362b7c810c9315')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b90813b210d3202cdd55c32cbd774776')"
     ]
   }
 }

@@ -14,9 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:ems="10"
         android:hint="ФИО"
         android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edBirthDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Дата рождения"
+        android:inputType="date" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -38,6 +46,14 @@
             android:layout_height="wrap_content"
             android:hint="ФИО"
             android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="date" />
     </LinearLayout>
 
     <EditText

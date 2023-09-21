@@ -14,9 +14,15 @@
             android:id="@+id/tvFio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5sp"
             android:gravity="center"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvBirthDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12sp" android:gravity="center"/>
 
         <TextView
             android:id="@+id/tvResp1"

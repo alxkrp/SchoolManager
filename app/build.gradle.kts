@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.ak.schoolmanager"
-        minSdk = 29
+        minSdk = 31
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"

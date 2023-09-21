@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import ru.ak.schoolmanager.databinding.ActivityStudentInfoBinding
 import ru.ak.schoolmanager.model.Student
+import java.time.format.DateTimeFormatter
 
 class StudentInfoPopup (view: View, activity: Activity, student: Student) : PopupWindow(
     view,
@@ -28,6 +29,12 @@ class StudentInfoPopup (view: View, activity: Activity, student: Student) : Popu
 
         val repArray = view.resources.getStringArray(R.array.responsible_list)
         binding.tvFio.text = student.fio
+        if (student.birthDate != null) {
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            binding.tvBirthDate.text = "(${student.birthDate!!.format(formatter)})"
+        } else {
+            binding.tvBirthDate.visibility = GONE
+        }
         if (student.resp1 != 0) {
             val sp1 = Html.fromHtml(
                 "${repArray[student.resp1]}<br/>${student.respFio1}<br/><big>${student.respPhone1}</big>",

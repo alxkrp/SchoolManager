@@ -23,6 +23,8 @@ import org.json.JSONObject
 import ru.ak.schoolmanager.adapter.StudentAdapter
 import ru.ak.schoolmanager.databinding.ActivityMainBinding
 import ru.ak.schoolmanager.model.Student
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), PERMISSION_CODE)
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SCHEDULE_EXACT_ALARM), PERMISSION_CODE)
         }
 
         binding.btnAdd.setOnClickListener {
@@ -80,8 +87,12 @@ class MainActivity : AppCompatActivity() {
             val studentJson = arr.getJSONObject(i)
             val fio = studentJson.optString("fio")
             if (!fio.isNullOrBlank()) {
+                val birthDateStr = studentJson.optString("birthDate")
+                val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                val birthDate: LocalDate? = if (birthDateStr.isNullOrBlank()) null else LocalDate.parse(birthDateStr, formatter)
                 val student = Student(
                     studentJson.getString("fio"),
+                    birthDate,
                     studentJson.optInt("resp1"),
                     studentJson.optString("respFio1"),
                     studentJson.optString("respPhone1"),

@@ -3,12 +3,19 @@ package ru.ak.schoolmanager.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import ru.ak.schoolmanager.db.DateConverter
 import java.io.Serializable
+import java.time.LocalDate
 
 @Entity(tableName = "students")
+@TypeConverters(DateConverter::class)
 data class Student(
     @ColumnInfo(name = "fio")
     var fio: String,
+
+    @ColumnInfo(name = "birthDate")
+    var birthDate: LocalDate?,
 
     @ColumnInfo(name = "resp1")
     var resp1: Int,

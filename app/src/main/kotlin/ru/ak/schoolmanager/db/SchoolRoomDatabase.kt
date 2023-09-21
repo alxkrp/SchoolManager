@@ -11,7 +11,8 @@ import ru.ak.schoolmanager.model.Student
     autoMigrations = [
 //       AutoMigration (from = 1, to = 2),
     ],
-    exportSchema = true)
+    exportSchema = true
+)
 abstract class SchoolRoomDatabase : RoomDatabase() {
     abstract fun getStudentDao(): StudentDao
 }
